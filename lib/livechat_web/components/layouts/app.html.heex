@@ -28,8 +28,23 @@
   </div>
 </header>
 <main class="px-4 py-20 sm:px-6 lg:px-8">
+  <div class="main-container">
+  <section>
+    <ul>
+    <%= for room_id <- @rooms_ids || [] do %>
+      <form action={~p"/connect_to_room"} method="get">
+        <input type="hidden" name="room_id" value={room_id}>
+        <button type="submit"><%= room_id %></button>
+      </form>
+    <% end %>
+
+    </ul>
+  </section>
+  <section>
   <div class="mx-auto max-w-2xl">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
+  </div>
+  </section>
   </div>
 </main>

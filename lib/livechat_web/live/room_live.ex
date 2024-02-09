@@ -18,7 +18,8 @@ defmodule LivechatWeb.RoomLive do
       room_id: id,
       room_pid: room_pid,
       messages: messages,
-      username: session["username"]
+      username: session["username"],
+      rooms_ids: session["rooms_ids"]
     }
 
     {:ok, assign(socket, assigns)}

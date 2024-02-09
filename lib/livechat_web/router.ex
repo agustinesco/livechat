@@ -7,8 +7,8 @@ defmodule LivechatWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {LivechatWeb.Layouts, :root}
     plug :put_secure_browser_headers
-
     plug LivechatWeb.MaybeAssingUser
+    plug LivechatWeb.MaybeAddRoomId
   end
 
   pipeline :api do
