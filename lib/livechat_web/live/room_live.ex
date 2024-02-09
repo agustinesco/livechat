@@ -1,9 +1,9 @@
 defmodule LivechatWeb.RoomLive do
-alias Phoenix.PubSub
-alias Livechat.RegistryManager
-alias Livechat.Room
+  alias Phoenix.PubSub
+  alias Livechat.RegistryManager
+  alias Livechat.Room
 
-  use Phoenix.LiveView
+  use LivechatWeb, :live_view
 
   def render(assigns) do
     LivechatWeb.RoomHTML.room(assigns)
