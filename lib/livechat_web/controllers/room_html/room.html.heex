@@ -1,13 +1,12 @@
 room id es  <%= @room_id %>
 
-<li>
+<ul>
 <%= for message <-  @messages do %>
-    <ul><%= message %></ul>
+    <li><%= message %></li>
 <% end %>
-</li>
+</ul>
 
 <form phx-submit="send_message">
-    <textarea name="message" id="message" cols="30" rows="10"></textarea>
-
+    <input type="text" name="message" id="message">
     <button type="submit">Mandar mensaje</button>
 </form>

@@ -24,8 +24,16 @@ defmodule Livechat.RegistryManager do
         {:reply, pid, state}
       [] ->
         {:ok, room_pid} = Livechat.Room.start_link(room_id)
+        Process.monitor(room_pid)
+
         :ets.insert(:room_registry, {room_id, room_pid})
         {:reply, room_pid, state}
     end
+  end
+
+  def handle_info({:DOWN, _ref, :process, room_pid, _reason}, state) do
+    :ets.delete(:room_registry, room_pid)
+
+    {:noreply, state}
   end
 end
