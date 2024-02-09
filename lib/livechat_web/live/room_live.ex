@@ -9,7 +9,7 @@ defmodule LivechatWeb.RoomLive do
     LivechatWeb.RoomHTML.room(assigns)
   end
 
-  def mount(%{"room_id" => id}, _session, socket) do
+  def mount(%{"room_id" => id}, session, socket) do
     room_pid = RegistryManager.create(id)
     messages = Room.get_messages(room_pid)
     PubSub.subscribe(Livechat.PubSub, id)
@@ -17,14 +17,15 @@ defmodule LivechatWeb.RoomLive do
     assigns = %{
       room_id: id,
       room_pid: room_pid,
-      messages: messages
+      messages: messages,
+      username: session["username"]
     }
 
     {:ok, assign(socket, assigns)}
   end
 
   def handle_event("send_message", %{"message" => message}, socket) do
-    send(socket.assigns.room_pid, {:send_message, message})
+    send(socket.assigns.room_pid, {:send_message,  {socket.assigns.username, message}})
 
     {:noreply, socket}
   end

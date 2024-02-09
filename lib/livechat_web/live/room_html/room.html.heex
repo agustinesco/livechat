@@ -1,8 +1,8 @@
 room id es  <%= @room_id %>
 
 <ul>
-<%= for message <-  @messages do %>
-    <li><%= message %></li>
+<%= for {user, message} <-  @messages do %>
+    <li><%= "#{user} dice:  #{message}" %></li>
 <% end %>
 </ul>
 
