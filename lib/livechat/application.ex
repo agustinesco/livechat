@@ -17,7 +17,8 @@ defmodule Livechat.Application do
       # {Livechat.Worker, arg},
       # Start to serve requests, typically the last entry
       LivechatWeb.Endpoint,
-      {Livechat.RegistryManager, name: Livechat.RegistryManager}
+      {Livechat.RegistryManager, name: Livechat.RegistryManager},
+      {Livechat.UsersManager, name: Livechat.UsersManager}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

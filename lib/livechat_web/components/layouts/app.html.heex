@@ -9,12 +9,12 @@
       </p>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <%= if assigns[:username] do %>
+      <%= if assigns[:user] do %>
       <a
         href={~p"/login/delete"}
         class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
       >
-        <%= assigns[:username]%> <span aria-hidden="true">&rarr;</span>
+        <%= @user.username %> <span aria-hidden="true">&rarr;</span>
       </a>
       <% else %>
       <a
@@ -31,11 +31,13 @@
   <div class="main-container">
   <section>
     <ul>
-    <%= for room_id <- @rooms_ids || [] do %>
-      <form action={~p"/connect_to_room"} method="get">
-        <input type="hidden" name="room_id" value={room_id}>
-        <button type="submit"><%= room_id %></button>
-      </form>
+    <%= if assigns[:user] do %>
+      <%= for room_id <- @user.rooms do %>
+        <form action={~p"/connect_to_room"} method="get">
+          <input type="hidden" name="room_id" value={room_id}>
+          <button type="submit"><%= room_id %></button>
+        </form>
+      <% end %>
     <% end %>
 
     </ul>

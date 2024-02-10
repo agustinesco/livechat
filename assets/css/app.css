@@ -3,3 +3,9 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+.main-container{
+    display: grid;
+    width: 100vw;
+    grid-template-columns: 1fr 3fr;
+}

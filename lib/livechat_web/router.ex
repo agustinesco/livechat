@@ -28,6 +28,8 @@ defmodule LivechatWeb.Router do
     pipe_through :browser
     resources "/", LoginController, only: [:new, :create]
     get "/delete", LoginController, :delete
+    get "/access", LoginController, :access
+    post "/validate", LoginController, :validate_user
   end
 
   # Other scopes may use custom stacks.
