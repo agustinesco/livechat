@@ -7,8 +7,17 @@ defmodule LivechatWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {LivechatWeb.Layouts, :root}
     plug :put_secure_browser_headers
+    plug :protect_from_forgery
     plug LivechatWeb.MaybeAssingUser
-    plug LivechatWeb.MaybeAddRoomId
+  end
+
+  pipeline :login do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {LivechatWeb.Layouts, :root}
+    plug :put_secure_browser_headers
+    plug LivechatWeb.MaybeAssingUser
   end
 
   pipeline :api do
@@ -17,7 +26,6 @@ defmodule LivechatWeb.Router do
 
   scope "/", LivechatWeb do
     pipe_through :browser
-    pipe_through :protect_from_forgery
 
     get "/", PageController, :home
 
@@ -25,7 +33,7 @@ defmodule LivechatWeb.Router do
   end
 
   scope "/login", LivechatWeb do
-    pipe_through :browser
+    pipe_through :login
     resources "/", LoginController, only: [:new, :create]
     get "/delete", LoginController, :delete
     get "/access", LoginController, :access
