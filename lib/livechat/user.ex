@@ -16,7 +16,7 @@ defmodule Livechat.UsersManager do
   end
 
   @doc """
-    Create a registry in the table with the given tuple,
+    Create a registry in the table with the given username and password,
     the first element will be the key for the registry
     iex> create(key)
     {:username, :password, :rooms}
@@ -40,12 +40,16 @@ defmodule Livechat.UsersManager do
   # process handlers #
   ####################
   def handle_call({:lookup, name}, _from, state) do
-    [{name, _, rooms}] = :ets.lookup(@table_name, name)
-    user = %{
-      username: name,
-      rooms: rooms
-    }
-    {:reply, user, state}
+    result =
+    case :ets.lookup(@table_name, name) do
+      [{name, _, rooms}] ->
+        %{
+          username: name,
+          rooms: rooms
+        }
+        _ -> nil
+      end
+      {:reply, result, state}
   end
 
   def handle_call({:create, {name, password}}, _from, state) do
@@ -75,9 +79,13 @@ defmodule Livechat.UsersManager do
   end
 
   def handle_cast({:add_room, {username, room_id}}, state) do
-    [{_, _ , rooms}] = :ets.lookup(@table_name, username)
-    updated_rooms = MapSet.put(rooms, room_id)
-    :ets.update_element(@table_name, username, {3, updated_rooms})
+    case :ets.lookup(@table_name, username) do
+      [{_, _ , rooms}] ->
+        updated_rooms = MapSet.put(rooms, room_id)
+        :ets.update_element(@table_name, username, {3, updated_rooms})
+      _ -> nil
+    end
+
     {:noreply, state}
   end
 end
