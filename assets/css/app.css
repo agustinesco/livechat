@@ -3,9 +3,22 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
-
+body{
+    max-height: 100vh;
+    overflow: hidden;
+}
 .main-container{
     display: grid;
-    width: 100vw;
     grid-template-columns: 1fr 3fr;
+}
+
+.chat-container{
+    display: flex;
+    flex-direction: column;
+    height: 40rem;
+    .message-container{
+        height: 60%;
+        overflow-y: scroll;
+        flex-direction: column-reverse;
+    }
 }

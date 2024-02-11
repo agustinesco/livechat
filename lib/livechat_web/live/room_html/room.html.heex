@@ -1,12 +1,17 @@
-room id es  <%= @room_id %>
+<div class="chat-container">
+    <ul class="list-group mb-3 message-container">
+    <%= for {user, message} <-  @messages do %>
+        <li class="list-group-item"><%= "#{get_username(user)} dice:  #{message}" %></li>
+    <% end %>
+    </ul>
 
-<ul>
-<%= for {user, message} <-  @messages do %>
-    <li><%= "#{get_username(user)} dice:  #{message}" %></li>
-<% end %>
-</ul>
+    <form phx-submit="send_message" class="row row-cols-lg-auto g-3 align-items-center message-form">
+        <div class="col-12">
+            <input type="text" class="form-control" placeholder="Message" name="message" id="message">
+        </div>
 
-<form phx-submit="send_message">
-    <input type="text" name="message" id="message">
-    <button type="submit">Mandar mensaje</button>
-</form>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+</div>
