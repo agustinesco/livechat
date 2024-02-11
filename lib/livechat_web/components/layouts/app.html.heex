@@ -18,7 +18,7 @@
       </a>
       <% else %>
       <a
-        href={~p"/login/new"}
+        href={~p"/login/access"}
         class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
       >
         Log in <span aria-hidden="true">&rarr;</span>
@@ -27,20 +27,28 @@
     </div>
   </div>
 </header>
-<main class="px-4 py-20 sm:px-6 lg:px-8">
+<main class="p-3">
   <div class="main-container">
   <section>
-    <ul>
+    <form action={~p"/connect_to_room"} method="get" class="mb-3">
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Room name" aria-label="Room name" name="room_id">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Join</button>
+  </form>
     <%= if assigns[:user] do %>
+    <div class="list-group">
       <%= for room_id <- @user.rooms do %>
-        <form action={~p"/connect_to_room"} method="get">
-          <input type="hidden" name="room_id" value={room_id}>
-          <button type="submit"><%= room_id %></button>
-        </form>
-      <% end %>
+          <form action={~p"/connect_to_room"} method="get">
+            <input type="hidden" name="room_id" value={room_id}>
+            <button type="submit" class={"list-group-item list-group-item-action p-2 flex-grow-1 #{maybe_active(assigns, room_id)}"}><%= room_id %></button>
+          </form>
+        <% end %>
+      </div>
     <% end %>
 
-    </ul>
   </section>
   <section>
   <div class="mx-auto max-w-2xl">
