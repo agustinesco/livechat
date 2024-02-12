@@ -1,4 +1,5 @@
 # Livechat
+This projecct is a simple chatting aplication where you can join rooms by typing a name and chat with every other user connected to that room, you can also chat anonymously or create and login with an user 
 
 ### Purpose
 
